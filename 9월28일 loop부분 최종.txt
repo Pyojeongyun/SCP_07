@@ -1,0 +1,25 @@
+Loop(){
+(LED=ÃÊ·Ï , a=0)
+if(30<dis && dis<=70){
+	if(LED=ÃÊ·Ï){
+		t1=mills();
+		LED=»¡°­
+		a=200;
+		}
+	}
+
+else if(dis<30){
+	if(LED=ÃÊ·Ï){
+		t1=mills();
+		LED=»¡°­
+		a=300;
+		}
+	}
+
+else (dis>70){
+	if(LED=»¡°­){
+		t2=mills();
+		LED=ÆÄ¶û
+		money= a * (t2-t1);}
+		}
+}
