@@ -1,0 +1,59 @@
+#define TRIG_PIN
+#define ECHO_PIN
+#define LED_PIN
+
+void setup(){
+PinMode(TRIG_PIN,OUTPUT);
+PinMode(ECHO_PIN,OUTPUT);
+PinMode(LED_PIN,OUTPUT);
+
+void loop(){
+double charge=0;
+double money=0;
+double distance=0;
+unsigned long start;
+unsigned long end;
+int color=0; /*색깔이 바뀜을 변수에 저장해서 알기위해서(초록 = 0, 빨강 = 1)
+digitalWrite(RED,LOW);
+digitalWrite(GREEN,HIGH);
+color=0;
+
+digitalWrite(TRIG_PIN,LOW);
+delayMicroseconds(10);
+digitalWrite(TRIG_PIN,HIGH);
+delayMicroseconds(10);
+digitalWrite(TRIG_PIN,LOW);
+
+distance=PulseIn(ECHO,HIGH) / 58.2; /*(거리 단위를 cm로 변환)
+
+if(30<distance && distance<=70){
+	if(color==0){
+		start=mills(); /*빨간불이 켜지면서 주차가 되므로 들어온 시간 측정
+		digitalWrite(GREEN,LOW);
+		digitalWrite(RED,HIGH);
+		color=1;
+		charge=200; /*소형차 이므로 초당 200원으로 계산하겠다
+		}
+	}
+
+else if(distance<=30){
+	if(color==0){
+		start=mills(); /*빨간불이 켜지면서 주차가 되므로 들어온 시간 측정
+		digitalWrite(GREEN,LOW);
+		digitalWrite(RED,HIGH);
+		color=1;
+		charge=300; /*대형차 이므로 초당 300원으로 계산하겠다
+		}
+	}
+
+else (distance>70){
+	if(color==1){
+		end=mills(); /*초록불이 켜지면서 차가 빠져나가므로 나가는 시간 측정
+		digitalWrite(RED,LOW);
+		digitalWrite(GREEN,HIGH);
+		color=0;
+		money=charge*(end-start); /*주차된 시간과 차종에 맞는 비용을 곱해서 가격 계산
+		
+		/*프린트 관련 함수는 헷갈려서 회의때 상의하려고 함
+		}
+	}
