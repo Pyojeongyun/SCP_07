@@ -1,0 +1,62 @@
+#define RED 11;
+#define GREEN 10;
+int trig = 9;
+int echo = 8;
+ 
+void setup()
+{
+serial.begin(9600);
+pinMode(trig,OUTPUT);
+pinMode(echo,INPUT);
+}
+void loop()
+{
+analogWirte(GREEN,255); //LED 초록불
+digitalWrite(trig,HIGH);
+delay(10);
+digitalWrite(trig,LOW);
+ 
+long distance = pulseIn(echo,HIGH)/58.2;
+long fee = 0;
+long time1, time2 = 0;
+serial.print("거리: ");
+serial.print(distance);
+serial.print("\ncm\n");
+analogWrite(RED,0);
+analogWrite(GREEN,0);
+ 
+if(distance < 50 && distance > 30)
+{
+if(analogRead(GREEN) == 255)  // ?
+{
+time1 = milis();
+}
+analogWirte(RED,255);
+fee = 200;
+}
+else if(distance < 30)
+{
+if(analogRead(GREEN) == 255) 
+{
+time1 = milis();
+}
+analogWirte(RED,255);
+fee = 500;
+}
+else if(distance > 50)
+{
+if(analogRead(RED) == 255) 
+{
+time2 = milis();
+}
+analogWrite(GREEN,255);
+ 
+serial.print("주차시간은 ");
+serial.print(time2-time1);
+serial.print("입니다.\n");
+serial.print("요금은 ");
+serial.print( ((time2-time1)*1000/60)*fee ); //분당 요금 곱함
+serial.print("입니다.\n");
+}
+delay 100;
+}
