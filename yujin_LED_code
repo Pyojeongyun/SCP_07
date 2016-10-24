@@ -1,0 +1,65 @@
+#include <LiquidCrystal.h>   //스케치-라이브러리가져오기
+#define TRIG 2 //초음파 보냄
+#define ECHO 3 //돌아오는 초음파 감지
+#define RED 11
+#define GREEN 10
+
+LiquidCrystal lcd(12,11,2,3,4,5);
+
+void setup()
+{
+	pinMode(TRIG, OUTPUT); 
+	pinMode(ECHO, INPUT); 
+	lcd.begin(16, 2);
+	lcd.print("hello, world!");
+}
+
+void loop()
+{
+	digitalWrite(TRIG, LOW);
+	delayMicroseconds(2);
+	digitalWrite(TRIG, HIGH);
+	delayMicroseconds(10);
+	digitalWrite(TRIG, LOW);
+
+	long distance = pulseIn(ECHO, ,HIGH)/58.2;  
+	  
+
+	analogWrite(RED, 0);
+	analogWrite(GREEN, 255);
+	long a =0;
+	value = digitalRead(GREEN);
+	long t1=t2=0;
+	int fee=0;
+
+	if(distance>30 && distance<=70){
+		if(value == 1){
+			t1 = millis();
+		}
+		analogWrite(RED, 255);
+		a=300;
+	}
+
+
+	}else if(distance <30){
+		if(value == 1){
+			t1 = millis();
+		}
+		analogWrite(RED, 255);
+		a=300;
+	}
+
+	else if (distance > 70){
+		if(value == 0){
+			t2 = millis();
+		}
+		analogWrite(GREEN, 255);
+	}
+	
+	fee=a*(t2-t1);
+	delay(100);
+
+	lcd.setCursor(0, 1);
+	lcd.print(fee);
+	
+}
