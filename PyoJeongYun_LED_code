@@ -1,0 +1,59 @@
+
+#include <LiquidCrystal.h>
+LiquidCrystal(12, 11, 5, 4, 3, 2);
+#define RED 11
+#define GREEN 10
+int a;
+long t1;
+long t2;
+long time;
+int fare;
+int trig=13;
+int echo=12;
+int ledState=low;
+void setup()
+{
+ pinMode(RED,OUTPUT);
+ pinMode(GREEN,OUTPUT);
+ pinMode(trig,OUTPUT);
+ pinMode(echo,INPUT);
+ Serial.begin(9600);
+ lcd.begin(16,2);
+ lcd.print(
+ 
+}
+void loop()
+{
+ digitalWrite(trig, HIGH); 
+ delayMicroseconds(10); 
+ digitalWrite(trig, LOW); 
+ long distance = pulseIn(echo, HIGH) * 17 / 1000; //단위 CM
+ Serial.print(distance);  // 변수 distance를 출력한다
+ Serial.println("cm");   // 문자열 cm을 출력하고 줄바꿈
+ delay(100);   
+digitalWrite(GREEN, ledState);
+if (distance < 30){
+ if(){
+  t1=millis();
+  a=300;
+}
+else if(distance<70){
+ if(){
+  t1=millis();
+  a=200;
+ }
+}
+else{
+ if(){
+  t2=millis();
+  time = (t2-t1)/1000;
+  fare=a*time;
+  lcd.print("시간: ");
+  lcd.print(time);
+  lcd.setCursor(0,1);
+  lcd.print("요금: ");
+  lcd.print(fare);
+  
+ }
+} 
+ 
