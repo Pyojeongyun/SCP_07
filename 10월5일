@@ -3,6 +3,7 @@
 #define RED 11
 #define GREEN 10
 
+
 long value=0;    //value변수는 LED불빛이 빨간색인지 초록색인지 구별할수있게 해주는 변수
 
 unsigned long a=0;
@@ -68,19 +69,23 @@ void loop()
     analogWrite(GREEN, 10);
     value=0;
    
-    fee=a*(t2-t1);
-    Serial.print("t1");
-    Serial.print(t1);
-    Serial.print("t2");
-    Serial.println(t2);
-    Serial.print("a");
-    Serial.println(a);
-    Serial.println(int((t2-t1)/1000));
-    //Serial.println("입니다.\n");
-    Serial.print("fee ");
-    Serial.println(fee/1000); 
-    //Serial.println("입니다.\n");
-    a=0;
+    fee=a*(t2-t1);                 //차종에 맞게 요금계산
+    
+    if(a!=0)                       //출력 반복되는것을 피하기위해서
+    {
+      Serial.print("t1");
+      Serial.print(t1);
+      Serial.print("t2");
+      Serial.println(t2);
+      Serial.print("a");
+      Serial.println(a);
+      Serial.println(int((t2-t1)/1000));
+      //Serial.println("입니다.\n");
+      Serial.print("fee ");
+      Serial.println((fee/100)*100);   //100원을 최소단위로 계산
+      //Serial.println("입니다.\n");
+      a=0;
+    }
     
   }
   
