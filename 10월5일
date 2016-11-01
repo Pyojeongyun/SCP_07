@@ -26,7 +26,7 @@ void loop()
   delayMicroseconds(10);
   digitalWrite(TRIG, LOW);
 
-  long distance = pulseIn(ECHO, HIGH)/58.2;  
+  long distance = pulseIn(ECHO, HIGH)/58.2;  //초음파센서로 구한 거리를 cm단위로 환산
 
 
   Serial.println(distance); 
