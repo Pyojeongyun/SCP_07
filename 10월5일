@@ -3,7 +3,7 @@
 #define RED 11
 #define GREEN 10
 
-long value=0;
+long value=0;    //value변수는 LED불빛이 빨간색인지 초록색인지 구별할수있게 해주는 변수
 
 unsigned long a=0;
 unsigned long t1=0;
@@ -26,7 +26,7 @@ void loop()
   delayMicroseconds(10);
   digitalWrite(TRIG, LOW);
 
-  long distance = pulseIn(ECHO, HIGH)/58.2;
+  long distance = pulseIn(ECHO, HIGH)/58.2;    //측정한 거리를 cm단위로 변환시켜주는 식
 
 
   Serial.println(distance); 
@@ -37,7 +37,7 @@ void loop()
 
   long fee=0;
 
-  if(distance<10){
+  if(distance<10){               //대형차 일 
     if(value==0){
       a=300;
       t1 = millis();
@@ -50,7 +50,7 @@ void loop()
   }
 
 
-  else if(distance <20){
+  else if(distance <20){           //소형차 일 때
     if(value==0){
        a=200;
       t1 = millis();
@@ -60,7 +60,7 @@ void loop()
    value=1;
   }
 
-  else {
+  else {                            //주차된 차가 나갈 때
     if(value==1){
       t2 = millis();
     }
