@@ -37,8 +37,8 @@ void loop()
   analogWrite(GREEN, 10);
 
   long fee=0;
-
-  if(distance<10){               //대형차 일 
+  
+  if(distance<10){               //대형차 일 때
     if(value==0){
       a=300;
       t1 = millis();
