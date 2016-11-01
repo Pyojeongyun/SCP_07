@@ -3,7 +3,7 @@
 #define RED 11
 #define GREEN 10
 
-long value=0;
+long value=0;   //value값은 빨간불인지, 초록불인지 알수있게 해주는 변수
 
 unsigned long a=0;
 unsigned long t1=0;
