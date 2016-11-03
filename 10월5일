@@ -1,9 +1,11 @@
+#include <LiquidCrystal.h>
+
 #define TRIG 2 //초음파 보냄
 #define ECHO 3 //돌아오는 초음파 감지
 #define RED 11
 #define GREEN 10
 
-
+LiquidCrystal lcd(12,11,2,3,4,5);
 long value=0;    //value변수는 LED불빛이 빨간색인지 초록색인지 구별할수있게 해주는 변수
 
 unsigned long a=0;
@@ -16,6 +18,7 @@ void setup()
   pinMode(TRIG, OUTPUT); 
   pinMode(ECHO, INPUT); 
   pinMode(GREEN, OUTPUT); pinMode(RED, OUTPUT); 
+  lcd.begin(16, 2);
 
 }
 
@@ -84,6 +87,14 @@ void loop()
       Serial.print("fee ");
       Serial.println((fee/100)*100);   //100원을 최소단위로 계산
       //Serial.println("입니다.\n");
+      
+      lcd.setCursor(0, 1);
+	    lcd.print(int((t2-t1)/1000));
+      lcd.print("seconds");
+      lcd.print(fee);
+      lcd.print("won");
+      
+      
       a=0;
     }
     
