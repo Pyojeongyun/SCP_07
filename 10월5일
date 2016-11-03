@@ -22,6 +22,7 @@ void setup()
 
   lcd.init();
   lcd.backlight();
+}
 
 void loop()
 {
