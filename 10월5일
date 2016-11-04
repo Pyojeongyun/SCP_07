@@ -5,7 +5,7 @@
 #define RED 11
 #define GREEN 10
 
-LiquidCrystal_I2C lcd(0x27,16,2);
+LiquidCrystal_I2C lcd(0x3F,16,2);
 long color=0;    //color변수는 LED불빛이 빨간색인지 초록색인지 구별할수있게 해주는 변수
 
 unsigned long charge=0;
@@ -62,7 +62,10 @@ void loop()
     }
     analogWrite(GREEN, 0);
     analogWrite(RED, 10);
-   color=1;
+    color=1;
+   
+    lcd.init();                    //자릿수 바뀔 때 오류 방지위해 초기화
+    lcd.backlight();
   }
 
   else {                            //주차된 차가 나갈 때
@@ -82,10 +85,14 @@ void loop()
       Serial.print((fee/100)*100);      //100원을 최소단위로 계산
       Serial.println("Won");
       
-      lcd.setCursor(0, 1);
-      lcd.print(int((t2-t1)/1000));
+      lcd.setCursor(0, 0);
+      lcd.print((int)(t2-t1)/1000);
+      lcd.setCursor(5,0);
       lcd.print("seconds");
-      lcd.print(fee);
+      
+      lcd.setCursor(0, 1);
+      lcd.print((fee/100)*100);
+      lcd.setCursor(5,1);
       lcd.print("won");
       
       charge=0;
