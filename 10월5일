@@ -34,12 +34,12 @@ void loop()
   delayMicroseconds(10);
   digitalWrite(TRIG, LOW);
 
-  long distance = pulseIn(ECHO, HIGH)/58.2;    //측정한 거리를 cm단위로 변환시켜주는 식
+  long distance = pulseIn(ECHO, HIGH)/58.2;   //측정한 거리를 cm단위로 변환시켜주는 식
 
   analogWrite(RED, 0);
   analogWrite(GREEN, 10);
 
-  if(distance<10){               //대형차 일 때
+  if(distance<10){                            //대형차 일 때
     if(color==0){
       charge=1000;
       t1 = millis();
@@ -47,12 +47,12 @@ void loop()
     analogWrite(GREEN, 0);
     analogWrite(RED, 10);
     color=1;
-    lcd.init();                    //자릿수 바뀔 때 출오류 방지위해 초기화
+    lcd.init();                               //자릿수 바뀔 때 출력오류 방지위해 초기화
     lcd.backlight();
   }
 
 
-  else if(distance <20){           //소형차 일 때
+  else if(distance <20){                      //소형차 일 때
     if(color==0){
        charge=500;
       t1 = millis();
@@ -64,16 +64,16 @@ void loop()
     lcd.backlight();
   }
 
-  else {                            //주차된 차가 나갈 때
+  else {                                      //주차 차가 나갈 때
     if(color==1){
       t2 = millis();
     }
     analogWrite(RED, 0);
     analogWrite(GREEN, 10);
     color=0;
-    fee=charge*((int)(t2-t1)/1000);                 //차종에 맞게 요금계산
+    fee=charge*((int)(t2-t1)/1000);           //차종에 맞게 요금계산
     
-    if(charge!=0)                       //출력 반복되는것을 피하기위해서
+    if(charge!=0)                             //출력 반복되는것을 피하기위해서
     {
       lcd.setCursor(0, 0);
       lcd.print((int)(t2-t1)/1000);
