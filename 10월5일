@@ -2,8 +2,11 @@
 
 LiquidCrystal_I2C lcd(0x3F,16,2);
 
-#define TRIG 2 //초음파 보냄
-#define ECHO 3 //돌아오는 초음파 감지
+
+#define TRIG1 2 //초음파 보냄 (차량 감지)
+#define ECHO1 3 //돌아오는 초음파 감지
+#define TRIG2 4 //초음파 보냄 (화폐 감지)
+#define ECHO2 5 //돌아오는 초음파 감지
 #define RED 11
 #define GREEN 10
 
@@ -16,25 +19,40 @@ unsigned long t2=0;
 
 void setup()
 {
-  Serial.begin(9600);
-  pinMode(TRIG, OUTPUT); 
-  pinMode(ECHO, INPUT); 
+    Serial.begin(9600);
+  pinMode(TRIG1, OUTPUT); 
+  pinMode(ECHO1, INPUT);
+  pinMode(TRIG2, OUTPUT); 
+  pinMode(ECHO2, INPUT); 
   pinMode(GREEN, OUTPUT);
-  pinMode(RED, OUTPUT); 
-
+  pinMode(RED, OUTPUT);
+  
   lcd.init();
   lcd.backlight();
 }
 
 void loop()
 {
-  digitalWrite(TRIG, LOW);
+   digitalWrite(TRIG1, LOW);
   delayMicroseconds(2);
-  digitalWrite(TRIG, HIGH);
+  digitalWrite(TRIG1, HIGH);
   delayMicroseconds(10);
-  digitalWrite(TRIG, LOW);
+  digitalWrite(TRIG1, LOW);
+  
+   digitalWrite(TRIG2, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG2, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG2, LOW);
 
-  long distance = pulseIn(ECHO, HIGH)/58.2;   //측정한 거리를 cm단위로 변환시켜주는 식
+  long distance = pulseIn(ECHO, HIGH)/58.2;        // 차량까지 측정한 거리를 cm단위로 변환시켜주는 식
+  long moneydistance = pulseIn(ECHO2, HIGH)/58.2;  // 화폐까지 측정한 거리를 cm단위로 변환시켜주는 식
+  
+  Serial.print(moneydistance); 
+  Serial.println("cm");
+
+  Serial.print(moneydistance);
+  Serial.println("cm");
 
   analogWrite(RED, 0);
   analogWrite(GREEN, 10);
@@ -71,6 +89,7 @@ void loop()
     analogWrite(RED, 0);
     analogWrite(GREEN, 10);
     color=0;
+    
     fee=charge*((int)(t2-t1)/1000);           //차종에 맞게 요금계산
     
     if(charge!=0)                             //출력 반복되는것을 피하기위해서
@@ -85,6 +104,38 @@ void loop()
       lcd.setCursor(5,1);
       lcd.print("Won");
       charge=0;
+    }
+    
+      long rest = fee;
+
+    if(moneydistance<10 && rest!=500){
+      count=count+1;
+      lcd.init();
+      lcd.backlight();
+      lcd.setCursor(0, 0);
+      lcd.print("Fee is");
+      lcd.setCursor(8,0);
+      lcd.print(fee);
+      lcd.setCursor(13, 0);
+      lcd.print("Won");
+
+      lcd.setCursor(0, 1);
+      lcd.print("Insert");
+      lcd.setCursor(8, 1);
+    
+      rest=rest-500*count;
+      lcd.print(rest);
+      lcd.setCursor(13, 1);
+      lcd.print("Won");
+    }
+
+    if(moneydistance<10 && rest==500){
+      lcd.init();
+      lcd.backlight();
+      lcd.setCursor(0, 0);
+      lcd.print("Complete!");
+      lcd.setCursor(0, 1);
+      lcd.print("Thank you!");
     }
   }
   delay(100);
