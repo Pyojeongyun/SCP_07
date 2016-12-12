@@ -55,12 +55,12 @@ void loop()
   moneydistance = pulseIn(ECHO2, HIGH)/58.2;  //화폐까지 측정한 거리를 cm단위로 변환시켜주는 식
 
   Serial.print(" ");
-  Serial.print(moneydistance);
+  Serial.print(distance);
 
   analogWrite(RED, 0);
   analogWrite(GREEN, 10);
 
-  if(distance<16){                     //대형차 일 때
+  if(distance<13){                     //대형차 일 때
     if(color==0){
       charge=1000;
       finish=0;
@@ -74,7 +74,7 @@ void loop()
     lcd.backlight();
   }
 
-  else if(distance<20){               //소형차 일 때
+  else if(distance<17){               //소형차 일 때
     if(color==0){
       charge=500;
       finish=0;
